@@ -130,7 +130,6 @@ namespace CarContollingScripts
         {
             // Calculate the current speed of the car in km/h
             float speed = carRb.velocity.magnitude * 3.6f; // Convert m/s to km/h
-            Debug.Log("Скорость автомобиля: " + speed + " км/ч");
             //foreach(var wheel in wheels)
             //{
             //    if(wheel.axel == Axel.Rear)

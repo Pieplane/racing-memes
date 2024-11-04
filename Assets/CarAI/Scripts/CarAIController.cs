@@ -20,6 +20,11 @@ public class CarAIController : MonoBehaviour
     public WheelCollider rearRightCollider;
     public WheelCollider rearLeftCollider;
 
+    // New Steering Wheel Transform
+    [Header("Steering Wheel")]
+    [Tooltip("Reference to the steering wheel transform.")]
+    public Transform steeringWheel;
+
     [Header("Checkpoints And Detections")]
     //Checkpoints
     [Tooltip("The checkpoint transform that the ai checks for. Every time the car enters a checkpoint, this variable changes to the next connected checkpoint to it, or will choose one randomly if it haves multiple checkpoints connected.")]
@@ -162,6 +167,13 @@ public class CarAIController : MonoBehaviour
     {
         frontRightCollider.steerAngle = angle;
         frontLeftCollider.steerAngle = angle;
+
+        // Rotate the steering wheel based on the steering angle
+        if (steeringWheel != null)
+        {
+            // Adjust the rotation axis and multiplier if needed for your model
+            steeringWheel.localRotation = Quaternion.Euler(0, 0, -0.5f * angle);
+        }
     }
 
     private void CalculateKMH()
@@ -178,6 +190,8 @@ public class CarAIController : MonoBehaviour
             lastPos = transform.position;
             stopwatch.Reset();
             stopwatch.Start();
+
+            UnityEngine.Debug.Log("Текущая скорость: " + kmh + " км/ч");
 
         }
         else

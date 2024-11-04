@@ -62,6 +62,10 @@ public class CheckpointScript : MonoBehaviour
                 {
                     controller.nextCheckpoint = nextCheckpoints[index];
                 }
+                else
+                {
+                    controller.speedLimit = 0;
+                }
             }
 
         }
