@@ -147,6 +147,7 @@ public class CarAIController : MonoBehaviour
     {
         frontRightCollider.motorTorque = value;
         frontLeftCollider.motorTorque = value;
+
     }
 
     /// <summary>
@@ -172,7 +173,7 @@ public class CarAIController : MonoBehaviour
         if (steeringWheel != null)
         {
             // Adjust the rotation axis and multiplier if needed for your model
-            steeringWheel.localRotation = Quaternion.Euler(0, 0, -0.5f * angle);
+            steeringWheel.localRotation = Quaternion.Euler(0, 0, -0.3f * angle);
         }
     }
 

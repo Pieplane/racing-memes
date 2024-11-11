@@ -145,7 +145,7 @@ namespace CarContollingScripts
                 {
                     if (speed < reverseSpeed)
                     {
-                        wheels[i].wheelCollider.motorTorque = -moveInput * 300 * maxAcceleration * Time.deltaTime;
+                        wheels[i].wheelCollider.motorTorque = -moveInput * 150 * maxAcceleration * Time.deltaTime;
                     }
                     else
                     {
@@ -156,7 +156,7 @@ namespace CarContollingScripts
                 {
                     if (speed < maxSpeed)
                     {
-                        wheels[i].wheelCollider.motorTorque = moveInput * 300 * maxAcceleration * Time.deltaTime;
+                        wheels[i].wheelCollider.motorTorque = moveInput * 150 * maxAcceleration * Time.deltaTime;
                     }
                     else
                     {
