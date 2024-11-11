@@ -413,8 +413,11 @@ MonoBehaviour:
   carModels:
   - {fileID: 6767499484995469481}
   - {fileID: 7946356654540686309}
-  rotationSpeed: 800
+  rotationSpeed: 150
   autoRotationSpeed: 20
+  inertiaDamping: 0.95
+  autoRotationThreshold: 0.1
+  userRotationForceMultiplier: 1
 --- !u!1 &572513231
 GameObject:
   m_ObjectHideFlags: 0
