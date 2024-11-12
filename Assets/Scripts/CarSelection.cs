@@ -24,10 +24,14 @@ public class CarSelection : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             isUserRotating = true;
-
+            currentRotationSpeed = 0f;
+            // Обновляем последнюю позицию мыши  
+            lastMousePosition = Input.mousePosition; 
+        }
+        if (Input.GetMouseButton(0)){
             Vector3 mouseDelta = Input.mousePosition - lastMousePosition;
             // Вычисляем скорость движения мыши и добавляем силу вращения
             float mouseSpeed = mouseDelta.x * userRotationForceMultiplier;
@@ -35,8 +39,6 @@ public class CarSelection : MonoBehaviour
 
             // Применяем вращение по горизонтали к модели
             carModels[currentIndex].transform.Rotate(Vector3.up, -currentRotationSpeed * rotationSpeed * Time.deltaTime, Space.World);
-
-            // Обновляем последнюю позицию мыши  
             lastMousePosition = Input.mousePosition;
         }
         else if (isUserRotating)
