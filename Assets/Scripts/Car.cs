@@ -14,7 +14,8 @@ public class Car : MonoBehaviour
     public int handling = 50;
     public int acceleration = 60;
 
-    public int upgradeCost = 500;
+    public int upgradeCostMoney = 500;
+    public int upgradeCostTickets = 50;
 
     public void UpgradeSpeed() => speed += 10;
     public void UpgradeHandling() => handling += 5;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class CarSelection : MonoBehaviour
     private bool isUserRotating = false;
     private float currentRotationSpeed = 0f; // Скорость вращения, когда пользователь отпускает мышь
     private Vector3 lastMousePosition; // Последняя позиция мыши
+
+    public event Action<int> OnCarIndexChanged;
 
     private void Start()
     {
@@ -66,6 +69,7 @@ public class CarSelection : MonoBehaviour
 
         currentIndex = (currentIndex + 1) % carModels.Count;
         ShowCar(currentIndex);
+        OnCarIndexChanged?.Invoke(currentIndex);
     }
     public void PreviousCar()
     {
@@ -73,6 +77,7 @@ public class CarSelection : MonoBehaviour
 
         currentIndex = (currentIndex - 1 + carModels.Count) % carModels.Count;
         ShowCar(currentIndex);
+        OnCarIndexChanged?.Invoke(currentIndex);
     }
     private void ShowCar(int index)
     {

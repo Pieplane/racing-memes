@@ -17,10 +17,6 @@ public class UIController : MonoBehaviour
         {
             uiManager.RegisterUIElement(panelName, panel);
         }
-        else
-        {
-            Debug.Log($"Panel {panelName} not Found for Register");
-        }
     }
     public void OpenUpgradePanel()
     {
