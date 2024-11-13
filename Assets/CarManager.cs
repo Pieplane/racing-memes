@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class CarManager : MonoBehaviour
             car.isPurchased = true;
             SaveCarData();
             return true;
+            
         }
         return false;
     }
@@ -54,7 +56,15 @@ public class CarManager : MonoBehaviour
         for (int i = 0; i < cars.Count; i++)
         {
             string carKey = "Car_" + i;
-            cars[i].isPurchased = PlayerPrefs.GetInt(carKey + "Purchased", 0) == 1;
+            if (i == 0)
+            {
+                cars[i].isPurchased = true;
+                PlayerPrefs.SetInt(carKey + "Purchased", 1);
+            }
+            else
+            {
+                cars[i].isPurchased = PlayerPrefs.GetInt(carKey + "Purchased", 0) == 1;
+            }
             cars[i].speed = PlayerPrefs.GetInt(carKey + "Speed", cars[i].speed);
             cars[i].acceleration = PlayerPrefs.GetInt(carKey + "Acceleration", cars[i].acceleration);
             cars[i].handling = PlayerPrefs.GetInt(carKey + "Handling", cars[i].handling);
