@@ -7,6 +7,7 @@ public class EconomyManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI moneyTxt;
     [SerializeField] private TextMeshProUGUI ticketsTxt;
+    [SerializeField] private UIEffects uiEffects;
 
     public int money;
     public int tickets;
@@ -29,7 +30,7 @@ public class EconomyManager : MonoBehaviour
         moneyTxt.text = money.ToString();
         ticketsTxt.text = tickets.ToString();
         SaveEconomyData();
-
+        Refusal();
     }
     private void LoadEconomyData()
     {
@@ -51,5 +52,9 @@ public class EconomyManager : MonoBehaviour
     {
         tickets += amount;
         SaveEconomyData ();
+    }
+    private void Refusal()
+    {
+        uiEffects.Attention(shakeDuration: 0.5f, shakeStrength: 10f, vibrato: 10, colorFlashDuration: 0.2f, target: moneyTxt.transform.parent);
     }
 }

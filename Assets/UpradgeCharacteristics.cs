@@ -13,8 +13,6 @@ public class UpradgeCharacteristics : MonoBehaviour
     [SerializeField] private CarSelection carSelection;
     [SerializeField] private CarManager carManager;
     [SerializeField] private TextMeshProUGUI carName;
-    [SerializeField] private TextMeshProUGUI moneyText;
-    [SerializeField] private TextMeshProUGUI ticketsText;
     [SerializeField] private TextMeshProUGUI priceCost;
     [SerializeField] private TextMeshProUGUI costMoneyForUpgrade;
     [SerializeField] private TextMeshProUGUI costTicketsForUpgrade;
@@ -114,7 +112,6 @@ public class UpradgeCharacteristics : MonoBehaviour
         {
             Debug.Log("Не смог купить");
         }
-
     }
     private void DefineButton()
     {
