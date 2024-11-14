@@ -15,10 +15,17 @@ public class UpradgeCharacteristics : MonoBehaviour
     [SerializeField] private TextMeshProUGUI carName;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI ticketsText;
+    [SerializeField] private TextMeshProUGUI priceCost;
+    [SerializeField] private TextMeshProUGUI costMoneyForUpgrade;
+    [SerializeField] private TextMeshProUGUI costTicketsForUpgrade;
+    [SerializeField] private TextMeshProUGUI levelTxt;
+    [SerializeField] private CarUpgrade carUpgrade;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button buyButton;
+    [SerializeField] private Button buyUpgradeButton;
 
     private int indexCar;
+    private int level = 1;
 
     private string textName;
     private bool isPurchased;
@@ -31,22 +38,55 @@ public class UpradgeCharacteristics : MonoBehaviour
         indexCar = 0;
         isPurchased = true;
         SetDefaultCharacteristicsCar();
+        LoadUpgradeLevels();
         DefineButton();
-        //PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
+        Debug.Log($"Car index {indexCar} car level {level}");
     }
+    private void LoadUpgradeLevels()
+    {
+        level = PlayerPrefs.GetInt(indexCar + "UpgradeLevel", 1);
+        UpgradeLevel upgradeLevel = carUpgrade.GetUpgradeForLevel(level);
 
+        if (upgradeLevel != null)
+        {
+            int costMoneyUpgrade = upgradeLevel.costMoney;
+            int costTicketsUpgrade = upgradeLevel.costTickets;
+            levelTxt.text = $"Уровень {level}";
+            costMoneyForUpgrade.text = costMoneyUpgrade.ToString();
+            costTicketsForUpgrade.text = costTicketsUpgrade.ToString();
+
+            Debug.Log($"Saved level {level}");
+        }
+    }
+    private void SaveUpgradeLevel()
+    {
+        PlayerPrefs.SetInt(indexCar + "UpgradeLevel", level);
+        PlayerPrefs.Save();
+    }
+    public void UpgradeLevel()
+    {
+        if (carManager.cars[indexCar].isPurchased && level < carUpgrade.upgradeLevels.Count)
+        {
+            level++;
+            SaveUpgradeLevel();
+            LoadUpgradeLevels();
+            DefineButton();
+            Debug.Log($"Car index {indexCar} car level {level}");
+        }
+    }
 
     private void OnEnable()
     {
-        if(carSelection != null)
+        if (carSelection != null)
         {
             carSelection.OnCarIndexChanged += HandleCarIndexChanged;
         }
-        
+
     }
     private void OnDisable()
     {
-        if(carSelection != null)
+        if (carSelection != null)
         {
             carSelection.OnCarIndexChanged -= HandleCarIndexChanged;
         }
@@ -64,19 +104,32 @@ public class UpradgeCharacteristics : MonoBehaviour
         {
             Debug.Log("Не смог купить");
         }
-        
+
     }
     private void DefineButton()
     {
-        if(indexCar >= 0 && isPurchased)
+        if (indexCar >= 0 && isPurchased)
         {
             upgradeButton.gameObject.SetActive(true);
             buyButton.gameObject.SetActive(false);
+            priceCost.transform.parent.gameObject.SetActive(false);
+            if (level < carUpgrade.upgradeLevels.Count)
+            {
+                buyUpgradeButton.interactable = true;
+                Debug.Log("buyUpgrade true");
+            }
+            else
+            {
+                buyUpgradeButton.interactable = false;
+                Debug.Log("buyUpgrade false");
+            }
         }
         else
         {
             upgradeButton.gameObject.SetActive(false);
             buyButton.gameObject.SetActive(true);
+            buyUpgradeButton.interactable = false;
+            priceCost.transform.parent.gameObject.SetActive(true);
         }
     }
     private void HandleCarIndexChanged(int newIndex)
@@ -93,11 +146,12 @@ public class UpradgeCharacteristics : MonoBehaviour
         acceleration = carManager.cars[newIndex].acceleration;
         handling = carManager.cars[newIndex].handling;
         textName = carManager.cars[newIndex].carName;
+        priceCost.text = carManager.cars[newIndex].price.ToString();
 
         SetCharacteristicsCar();
+        LoadUpgradeLevels();
         DefineButton();
-
-        Debug.Log($"car index {newIndex}");
+        //Debug.Log($"car index {newIndex}");
     }
     private void SetDefaultCharacteristicsCar()
     {

@@ -1,16 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class EconomyManager : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI moneyTxt;
+    [SerializeField] private TextMeshProUGUI ticketsTxt;
+
     public int money;
     public int tickets;
 
     private void Start()
     {
         LoadEconomyData();
+        moneyTxt.text = money.ToString();
+        ticketsTxt.text = tickets.ToString();
     }
+
     public bool CanAfford(int carPrice, int ticketCost)
     {
         return money >= carPrice && tickets >= ticketCost;
@@ -19,6 +26,9 @@ public class EconomyManager : MonoBehaviour
     {
         money -= amount;
         tickets -= ticketAmount;
+        moneyTxt.text = money.ToString();
+        ticketsTxt.text = tickets.ToString();
+        SaveEconomyData();
 
     }
     private void LoadEconomyData()
