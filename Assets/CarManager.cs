@@ -7,11 +7,17 @@ public class CarManager : MonoBehaviour
 {
     public List<Car> cars;
     public EconomyManager economyManager;
+    public CarUpgrade carUpgrade;
+
+    private int costMoneyUpgrade;
+    private int costTicketsUpgrade;
+
 
     private void Start()
     {
         LoadCarData();
     }
+
     public bool BuyCar(int carIndex)
     {
         Car car = cars[carIndex];
@@ -25,27 +31,18 @@ public class CarManager : MonoBehaviour
         }
         return false;
     }
-    public bool UpgradeCar(int carIndex, string attribute) 
+    public bool UpgradeCar(int carIndex) 
     {
         Car car = cars[carIndex];
-        if(car.isPurchased && economyManager.money >= car.upgradeCostMoney && economyManager.tickets >= car.upgradeCostTickets)
+        int level = PlayerPrefs.GetInt(carIndex + "UpgradeLevel", 1);
+        costMoneyUpgrade = carUpgrade.GetUpgradeForLevel(level).costMoney;
+        costTicketsUpgrade = carUpgrade.GetUpgradeForLevel(level).costTickets;
+        if (car.isPurchased && economyManager.money >= costMoneyUpgrade && economyManager.tickets >= costTicketsUpgrade)
         {
-            economyManager.Spend(car.upgradeCostMoney, car.upgradeCostTickets);
-
-            switch(attribute)
-            {
-                case "speed":
-                    car.UpgradeSpeed();
-                    break;
-                case "acceleration":
-                    car.UpgradeAcceleration();
-                    break;
-                case "handling":
-                    car.UpgradeHandling();
-                    break;
-                default:
-                    return false;
-            }
+            economyManager.Spend(costMoneyUpgrade, costTicketsUpgrade);
+            car.UpgradeSpeed();
+            car.UpgradeAcceleration();
+            car.UpgradeHandling();
             SaveCarData();
             return true;
         }

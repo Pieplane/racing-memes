@@ -3831,8 +3831,6 @@ MonoBehaviour:
   speed: 40
   handling: 50
   acceleration: 60
-  upgradeCostMoney: 500
-  upgradeCostTickets: 50
 --- !u!4 &1498431622
 Transform:
   m_ObjectHideFlags: 0
@@ -3864,6 +3862,7 @@ MonoBehaviour:
   - {fileID: 1498431621}
   - {fileID: 1498431624}
   economyManager: {fileID: 1048827192}
+  carUpgrade: {fileID: 11400000, guid: f995d23da13b9a64a8c0d5dfecd9fb3c, type: 2}
 --- !u!114 &1498431624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3878,13 +3877,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carName: "\u041C\u044F\u0443\u0441\u0442\u0430\u043D\u0433"
   price: 300
-  ticketCost: 3
+  ticketCost: 0
   isPurchased: 0
   speed: 100
   handling: 50
   acceleration: 60
-  upgradeCostMoney: 500
-  upgradeCostTickets: 50
 --- !u!1 &1672212851
 GameObject:
   m_ObjectHideFlags: 0

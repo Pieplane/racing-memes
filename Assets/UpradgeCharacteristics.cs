@@ -68,11 +68,21 @@ public class UpradgeCharacteristics : MonoBehaviour
     {
         if (carManager.cars[indexCar].isPurchased && level < carUpgrade.upgradeLevels.Count)
         {
-            level++;
-            SaveUpgradeLevel();
-            LoadUpgradeLevels();
-            DefineButton();
-            Debug.Log($"Car index {indexCar} car level {level}");
+            bool sucess = carManager.UpgradeCar(indexCar);
+            if (sucess)
+            {
+                level++;
+                SaveUpgradeLevel();
+                LoadUpgradeLevels();
+                DefineButton();
+                HandleCarCharacteristics(indexCar);
+                SetCharacteristicsCar();
+                Debug.Log($"Car index {indexCar} car level {level} sucessed");
+            }
+            else
+            {
+                Debug.Log("Whats wrong");
+            }
         }
     }
 
@@ -152,6 +162,12 @@ public class UpradgeCharacteristics : MonoBehaviour
         LoadUpgradeLevels();
         DefineButton();
         //Debug.Log($"car index {newIndex}");
+    }
+    private void HandleCarCharacteristics(int index)
+    {
+        speed = carManager.cars[index].speed;
+        acceleration = carManager.cars[index].acceleration;
+        handling = carManager.cars[index].handling;
     }
     private void SetDefaultCharacteristicsCar()
     {
